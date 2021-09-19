@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { JwtService } from 'src/jwt/jwt.service';
 import { Repository } from 'typeorm';
 import {
   CreateAccountInput,
@@ -7,15 +8,13 @@ import {
 } from './dtos/create-account.dto';
 import { LoginInput, LoginOutput } from './dtos/login.dto';
 import { User } from './entity/user.entity';
-import * as JWT from 'jsonwebtoken';
-import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly users: Repository<User>,
-    private readonly configService: ConfigService,
+    private readonly jwtService: JwtService
   ) {}
 
   async createAccount(
@@ -69,12 +68,7 @@ export class UserService {
       if (isUserCorrect) {
         return {
           ok: true,
-          token: JWT.sign(
-            {
-              id: user.id,
-            },
-            this.configService.get('SECRET_KEY'),
-          ),
+          token: this.jwtService.sign(user.id)
         };
       }
 
@@ -88,5 +82,9 @@ export class UserService {
         error: "Couldn't complete request please try agin later!",
       };
     }
+  }
+
+  async findById(id: number): Promise<User> {
+    return await this.users.findOne({id});
   }
 }

@@ -14,7 +14,7 @@ type LoginOutput {
 }
 
 type Query {
-  user: Boolean!
+  me: Boolean!
 }
 
 type Mutation {

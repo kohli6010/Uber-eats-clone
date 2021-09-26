@@ -78,7 +78,7 @@ export class UserResolver {
         user.id,
         editProfileInput,
       );
-      if (response.affected) {
+      if (response.id == user.id) {
         return {
           ok: true,
           error: null,

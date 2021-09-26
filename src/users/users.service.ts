@@ -90,8 +90,15 @@ export class UserService {
   }
 
   async updateUserProfile(id: number, editProfileInput: EditProfileInput){
-    return await this.users.update({id}, {
-      ...editProfileInput
-    })
+    const user = await this.users.findOne(id);
+    if(editProfileInput.email){
+      user.email = editProfileInput.email;
+    }
+
+    if(editProfileInput.password){
+      user.password = editProfileInput.password;
+    }
+
+    return await this.users.save(user);
   }
 }

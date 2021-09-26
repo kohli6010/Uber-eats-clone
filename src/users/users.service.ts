@@ -6,6 +6,7 @@ import {
   CreateAccountInput,
   CreateAccountOutput,
 } from './dtos/create-account.dto';
+import { EditProfileInput } from './dtos/edit-profile.dto';
 import { LoginInput, LoginOutput } from './dtos/login.dto';
 import { User } from './entity/user.entity';
 
@@ -86,5 +87,11 @@ export class UserService {
 
   async findById(id: number): Promise<User> {
     return await this.users.findOne({id});
+  }
+
+  async updateUserProfile(id: number, editProfileInput: EditProfileInput){
+    return await this.users.update({id}, {
+      ...editProfileInput
+    })
   }
 }

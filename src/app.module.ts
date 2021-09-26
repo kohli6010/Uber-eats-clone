@@ -10,6 +10,7 @@ import { CommonModule } from './common/common.module';
 import { User } from './users/entity/user.entity';
 import { JwtModule } from './jwt/jwt.module';
 import { JwtMiddleware } from './jwt/jwt.middleware';
+import { GuardsModule } from './guards/guards.module';
 
 @Module({
   imports: [
@@ -48,7 +49,6 @@ import { JwtMiddleware } from './jwt/jwt.middleware';
       SECRET_KEY: process.env.SECRET_KEY,
     }),
     UsersModule,
-    CommonModule,
   ],
   controllers: [],
   providers: [],

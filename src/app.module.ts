@@ -11,6 +11,7 @@ import { User } from './users/entity/user.entity';
 import { JwtModule } from './jwt/jwt.module';
 import { JwtMiddleware } from './jwt/jwt.middleware';
 import { GuardsModule } from './guards/guards.module';
+import { Verification } from './users/entity/verification.entity';
 
 @Module({
   imports: [
@@ -41,7 +42,7 @@ import { GuardsModule } from './guards/guards.module';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [User],
+      entities: [User, Verification],
       synchronize: true,
       logging: true,
     }),
